@@ -7,8 +7,11 @@ import (
 	"io/ioutil"
 	"testing"
 
+	fixed "github.com/mmcloughlin/bug25519/fixed"
 	"golang.org/x/crypto/curve25519"
 )
+
+type Implementation func(*[32]byte, *[32]byte, *[32]byte)
 
 type TestVector struct {
 	In     [32]byte
@@ -16,14 +19,22 @@ type TestVector struct {
 	Expect [32]byte
 }
 
-func TestTestVectors(t *testing.T) {
+func TestCurrentTestVectors(t *testing.T) {
+	CheckTestVectors(t, curve25519.ScalarMult)
+}
+
+func TestTestVectorsFixed(t *testing.T) {
+	CheckTestVectors(t, fixed.ScalarMult)
+}
+
+func CheckTestVectors(t *testing.T, mul Implementation) {
 	tvs := LoadTestVectors(t, "testdata/testvectors.json")
 	failed := 0
 	for _, tv := range tvs {
 		var got, in, base [32]byte
 		copy(in[:], tv.In[:])
 		copy(base[:], tv.Base[:])
-		curve25519.ScalarMult(&got, &in, &base)
+		mul(&got, &in, &base)
 		if !bytes.Equal(got[:], tv.Expect[:]) {
 			t.Logf("    in = %x", tv.In)
 			t.Logf("  base = %x", tv.Base)
