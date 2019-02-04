@@ -19,7 +19,7 @@ type TestVector struct {
 	Expect [32]byte
 }
 
-func TestCurrentTestVectors(t *testing.T) {
+func TestTestVectorsCurrent(t *testing.T) {
 	CheckTestVectors(t, curve25519.ScalarMult)
 }
 
