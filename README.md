@@ -1,5 +1,5 @@
 # bug25519
-Possible bug in Go x/crypto/curve25519
+Possible bug in Go x/crypto/curve25519. Go issue [#30095](https://golang.org/issue/30095).
 
 ## Problem
 
