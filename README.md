@@ -36,7 +36,7 @@ $ go test -v -run Current -tags appengine | head
 
 Comparison against the `ref10` implementation suggests the following fix.
 
-```
+```patch
 diff --git a/curve25519/curve25519.go b/curve25519/curve25519.go
 index cb8fbc5..75f24ba 100644
 --- a/curve25519/curve25519.go
